@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Olijopa 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e0e0e;
+      --surface: #1a1a1a;
+      --border: #2a2a2a;
+      --text: #f0f0f0;
+      --muted: #888;
+      --azul: #3b82f6;
+      --amarelo: #f59e0b;
+      --verde: #22c55e;
+      --vermelho: #ef4444;
+      --gold: #FFD700;
+      --silver: #C0C0C0;
+      --bronze: #CD7F32;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 0 48px;
+    }
+
+    /* BANNER */
+    header {
+      width: 100%;
+      background: linear-gradient(135deg, #111 0%, #1c1c1c 100%);
+      border-bottom: 3px solid var(--border);
+      padding: 28px 24px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .event-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.4rem, 10vw, 4.5rem);
+      letter-spacing: 0.08em;
+      line-height: 1;
+      background: linear-gradient(180deg, #ffffff 40%, #888 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .event-sub {
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(239,68,68,0.15);
+      border: 1px solid rgba(239,68,68,0.4);
+      color: #ef4444;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 99px;
+      margin-top: 12px;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    /* TABELA */
+    .scoreboard {
+      width: 100%;
+      max-width: 520px;
+      padding: 24px 16px 0;
+    }
+
+    .section-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+      padding-left: 4px;
+    }
+
+    .team-row {
+      display: grid;
+      grid-template-columns: 32px 64px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
+    }
+
+    .team-row:hover {
+      transform: translateX(4px);
+    }
+
+    /* posição */
+    .pos {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      text-align: center;
+      line-height: 1;
+    }
+
+    .pos.gold   { color: var(--gold); }
+    .pos.silver { color: var(--silver); }
+    .pos.bronze { color: var(--bronze); }
+    .pos.other  { color: var(--muted); }
+
+    /* mascote placeholder */
+    .mascot {
+      width: 56px;
+      height: 56px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    /* info */
+    .team-info { min-width: 0; }
+
+    .team-name {
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .team-tag {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* pontuação */
+    .team-score {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      line-height: 1;
+      text-align: right;
+      letter-spacing: 0.02em;
+    }
+
+    /* cores das equipes */
+    .azul    .mascot { background: rgba(59,130,246,0.2); border: 1px solid rgba(59,130,246,0.4); }
+    .azul    .team-name, .azul    .team-score { color: var(--azul); }
+
+    .amarelo .mascot { background: rgba(245,158,11,0.2); border: 1px solid rgba(245,158,11,0.4); }
+    .amarelo .team-name, .amarelo .team-score { color: var(--amarelo); }
+
+    .verde   .mascot { background: rgba(34,197,94,0.2);  border: 1px solid rgba(34,197,94,0.4); }
+    .verde   .team-name, .verde   .team-score { color: var(--verde); }
+
+    .vermelho .mascot { background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); }
+    .vermelho .team-name, .vermelho .team-score { color: var(--vermelho); }
+
+    /* lider highlight */
+    .team-row.leader {
+      border-color: rgba(255,215,0,0.3);
+      background: linear-gradient(135deg, #1a1a1a 0%, #1f1c10 100%);
+    }
+
+    /* RODAPÉ INSTAGRAM */
+    footer {
+      width: 100%;
+      max-width: 520px;
+      padding: 32px 16px 0;
+    }
+
+    .footer-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+      padding-left: 4px;
+    }
+
+    .instagram-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .ig-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .ig-btn:hover { background: #222; }
+
+    .ig-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .ig-btn.azul:hover     { border-color: var(--azul); }
+    .ig-btn.amarelo:hover  { border-color: var(--amarelo); }
+    .ig-btn.verde:hover    { border-color: var(--verde); }
+    .ig-btn.vermelho:hover { border-color: var(--vermelho); }
+
+    .ig-btn.azul     .ig-dot { background: var(--azul); }
+    .ig-btn.amarelo  .ig-dot { background: var(--amarelo); }
+    .ig-btn.verde    .ig-dot { background: var(--verde); }
+    .ig-btn.vermelho .ig-dot { background: var(--vermelho); }
+
+    /* update info */
+    .update-info {
+      text-align: center;
+      font-size: 0.68rem;
+      color: #555;
+      margin-top: 28px;
+      letter-spacing: 0.05em;
+    }
+
+    /* animação de reordenação */
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .team-row { animation: slideIn 0.4s ease both; }
+    .team-row:nth-child(1) { animation-delay: 0.05s; }
+    .team-row:nth-child(2) { animation-delay: 0.10s; }
+    .team-row:nth-child(3) { animation-delay: 0.15s; }
+    .team-row:nth-child(4) { animation-delay: 0.20s; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="event-label">Olijopa 2026</div>
+    <div class="event-sub">Campeonato Multi-Esportivo</div>
+    <div class="live-badge"><span class="live-dot"></span> Ao vivo</div>
+  </header>
+
+  <div class="scoreboard">
+    <div class="section-title">Classificação Geral</div>
+    <div id="ranking"></div>
+  </div>
+
+  <footer>
+    <div class="footer-title">Acompanhe nas redes</div>
+    <div class="instagram-grid">
+      <a class="ig-btn azul"     href="https://instagram.com/equipeazul"     target="_blank"><span class="ig-dot"></span> @equipeazul</a>
+      <a class="ig-btn amarelo"  href="https://instagram.com/equipeamarelo"  target="_blank"><span class="ig-dot"></span> @equipeamarelo</a>
+      <a class="ig-btn verde"    href="https://instagram.com/equipeverde"    target="_blank"><span class="ig-dot"></span> @equipeverde</a>
+      <a class="ig-btn vermelho" href="https://instagram.com/equipevermelho" target="_blank"><span class="ig-dot"></span> @equipevermelho</a>
+    </div>
+    <div class="update-info" id="update-info">Atualizado agora</div>
+  </footer>
+
+  <script>
+    // DADOS PROVISÓRIOS — substituir pela conexão com Google Sheets
+    const teamsData = [
+      { id: 'azul',     name: 'Azul',     emoji: '🔵', points: 543 },
+      { id: 'amarelo',  name: 'Amarelo',  emoji: '🟡', points: 534 },
+      { id: 'verde',    name: 'Verde',    emoji: '🟢', points: 354 },
+      { id: 'vermelho', name: 'Vermelho', emoji: '🔴', points: 200 },
+    ];
+
+    const posClass = ['gold', 'silver', 'bronze', 'other'];
+    const posLabel = ['1º', '2º', '3º', '4º'];
+
+    function render(teams) {
+      const sorted = [...teams].sort((a, b) => b.points - a.points);
+      const container = document.getElementById('ranking');
+      container.innerHTML = '';
+
+      sorted.forEach((team, i) => {
+        const row = document.createElement('div');
+        row.className = `team-row ${team.id}${i === 0 ? ' leader' : ''}`;
+        row.innerHTML = `
+          <div class="pos ${posClass[i]}">${posLabel[i]}</div>
+          <div class="mascot">${team.emoji}</div>
+          <div class="team-info">
+            <div class="team-name">Equipe ${team.name}</div>
+            <div class="team-tag">Pontuação total</div>
+          </div>
+          <div class="team-score">${team.points}</div>
+        `;
+        container.appendChild(row);
+      });
+
+      const now = new Date();
+      document.getElementById('update-info').textContent =
+        `Atualizado às ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+    }
+
+    render(teamsData);
+
+    // Quando conectar ao Google Sheets, substituir a função abaixo
+    // e chamar render(dadosDaPlanilha) com os dados reais
+  </script>
+
+</body>
+</html>
