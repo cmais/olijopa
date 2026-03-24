@@ -1,28 +1,71 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Olijopa 2026</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ── TEMAS ── */
     :root {
-      --bg: #0e0e0e;
-      --surface: #1a1a1a;
-      --border: #2a2a2a;
-      --text: #f0f0f0;
-      --muted: #888;
-      --azul: #3b82f6;
-      --amarelo: #f59e0b;
-      --verde: #22c55e;
+      --azul:     #3b82f6;
+      --amarelo:  #f59e0b;
+      --verde:    #22c55e;
       --vermelho: #ef4444;
-      --gold: #FFD700;
-      --silver: #C0C0C0;
-      --bronze: #CD7F32;
+      --gold:     #FFD700;
+      --silver:   #C0C0C0;
+      --bronze:   #CD7F32;
+      --transition: background 0.3s, color 0.3s, border-color 0.3s;
     }
 
+    [data-theme="dark"] {
+      --bg:         #0e0e0e;
+      --surface:    #1a1a1a;
+      --surface2:   #222;
+      --border:     #2a2a2a;
+      --text:       #f0f0f0;
+      --muted:      #666;
+      --muted2:     #444;
+      --header-bg:  linear-gradient(135deg, #111 0%, #1c1c1c 100%);
+      --leader-bg:  linear-gradient(135deg, #1a1a1a 0%, #1f1c10 100%);
+      --leader-bdr: rgba(255,215,0,0.25);
+      --btn-bg:     rgba(255,255,255,0.08);
+      --btn-hover:  rgba(255,255,255,0.14);
+      --btn-text:   #f0f0f0;
+      --shadow:     0 2px 12px rgba(0,0,0,0.4);
+      --live-bg:    rgba(239,68,68,0.15);
+      --live-bdr:   rgba(239,68,68,0.4);
+      --live-color: #ef4444;
+      --toast-bg:   #f0f0f0;
+      --toast-text: #111;
+    }
+
+    [data-theme="light"] {
+      --bg:         #f4f2ee;
+      --surface:    #ffffff;
+      --surface2:   #f8f7f4;
+      --border:     #e2ddd6;
+      --text:       #1a1a1a;
+      --muted:      #999;
+      --muted2:     #ccc;
+      --header-bg:  linear-gradient(135deg, #ffffff 0%, #f4f2ee 100%);
+      --leader-bg:  linear-gradient(135deg, #fff 60%, #fffdf0 100%);
+      --leader-bdr: rgba(184,134,11,0.3);
+      --btn-bg:     rgba(0,0,0,0.06);
+      --btn-hover:  rgba(0,0,0,0.11);
+      --btn-text:   #1a1a1a;
+      --shadow:     0 2px 12px rgba(0,0,0,0.07);
+      --live-bg:    #fef2f2;
+      --live-bdr:   rgba(220,38,38,0.3);
+      --live-color: #dc2626;
+      --toast-bg:   #1a1a1a;
+      --toast-text: #f0f0f0;
+    }
+
+    /* ── BASE ── */
     body {
       background: var(--bg);
       color: var(--text);
@@ -31,21 +74,23 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 0 0 48px;
+      padding-bottom: 56px;
+      transition: var(--transition);
     }
 
-    /* BANNER */
+    /* ── HEADER ── */
     header {
       width: 100%;
-      background: linear-gradient(135deg, #111 0%, #1c1c1c 100%);
-      border-bottom: 3px solid var(--border);
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--border);
       padding: 28px 24px 20px;
       text-align: center;
       position: relative;
       overflow: hidden;
+      transition: var(--transition);
     }
 
-    header::before {
+    [data-theme="dark"] header::before {
       content: '';
       position: absolute;
       inset: 0;
@@ -55,168 +100,209 @@
 
     .event-label {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.4rem, 10vw, 4.5rem);
+      font-size: clamp(2.4rem, 10vw, 4.8rem);
       letter-spacing: 0.08em;
       line-height: 1;
+      color: var(--text);
+      transition: color 0.3s;
+    }
+
+    [data-theme="dark"] .event-label {
       background: linear-gradient(180deg, #ffffff 40%, #888 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    .event-sub {
-      font-size: 0.8rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 6px;
+    /* botões do header */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+      flex-wrap: wrap;
     }
 
-    .live-badge {
+    .hbtn {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(239,68,68,0.15);
-      border: 1px solid rgba(239,68,68,0.4);
-      color: #ef4444;
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.7rem;
       font-weight: 700;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 99px;
-      margin-top: 12px;
+      padding: 5px 13px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, border-color 0.3s;
+      white-space: nowrap;
     }
+
+    .hbtn:hover  { background: var(--btn-hover); }
+    .hbtn:active { transform: scale(0.95); }
+
+    /* badge ao vivo */
+    .hbtn.live {
+      background: var(--live-bg);
+      border-color: var(--live-bdr);
+      color: var(--live-color);
+      cursor: default;
+    }
+    .hbtn.live:hover { background: var(--live-bg); }
 
     .live-dot {
       width: 7px;
       height: 7px;
-      background: #ef4444;
+      background: var(--live-color);
       border-radius: 50%;
       animation: pulse 1.4s ease-in-out infinite;
+      flex-shrink: 0;
     }
 
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
+      50%       { opacity: 0.3; transform: scale(0.6); }
     }
 
-    /* TABELA */
+    /* ── SCOREBOARD ── */
     .scoreboard {
       width: 100%;
-      max-width: 520px;
+      max-width: 500px;
       padding: 24px 16px 0;
     }
 
     .section-title {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--muted);
       margin-bottom: 12px;
-      padding-left: 4px;
+      padding-left: 2px;
+      transition: color 0.3s;
     }
 
+    /* loading / erro */
+    .status-msg {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+    .status-msg i {
+      display: block;
+      font-size: 2rem;
+      margin-bottom: 12px;
+      opacity: 0.35;
+    }
+
+    /* linha de equipe */
     .team-row {
       display: grid;
-      grid-template-columns: 32px 64px 1fr auto;
+      grid-template-columns: 28px 58px 1fr auto;
       align-items: center;
       gap: 12px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 14px 16px;
       margin-bottom: 10px;
-      transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, background 0.3s, border-color 0.3s;
     }
 
-    .team-row:hover {
-      transform: translateX(4px);
+    .team-row:hover { transform: translateX(4px); }
+
+    .team-row.leader {
+      border-color: var(--leader-bdr);
+      background: var(--leader-bg);
     }
 
     /* posição */
     .pos {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       text-align: center;
       line-height: 1;
     }
-
     .pos.gold   { color: var(--gold); }
     .pos.silver { color: var(--silver); }
     .pos.bronze { color: var(--bronze); }
-    .pos.other  { color: var(--muted); }
+    .pos.other  { color: var(--muted2); }
 
-    /* mascote placeholder */
+    /* mascote */
     .mascot {
-      width: 56px;
-      height: 56px;
-      border-radius: 10px;
+      width: 54px;
+      height: 54px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       flex-shrink: 0;
     }
 
     /* info */
     .team-info { min-width: 0; }
-
     .team-name {
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 0.95rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
     }
-
     .team-tag {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--muted);
       margin-top: 2px;
+      transition: color 0.3s;
     }
 
     /* pontuação */
     .team-score {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
+      font-size: 2.1rem;
       line-height: 1;
       text-align: right;
       letter-spacing: 0.02em;
     }
 
-    /* cores das equipes */
-    .azul    .mascot { background: rgba(59,130,246,0.2); border: 1px solid rgba(59,130,246,0.4); }
-    .azul    .team-name, .azul    .team-score { color: var(--azul); }
+    /* cores por equipe — dark */
+    [data-theme="dark"] .azul     .mascot { background: rgba(59,130,246,0.18); border: 1px solid rgba(59,130,246,0.35); }
+    [data-theme="dark"] .amarelo  .mascot { background: rgba(245,158,11,0.18); border: 1px solid rgba(245,158,11,0.35); }
+    [data-theme="dark"] .verde    .mascot { background: rgba(34,197,94,0.18);  border: 1px solid rgba(34,197,94,0.35); }
+    [data-theme="dark"] .vermelho .mascot { background: rgba(239,68,68,0.18);  border: 1px solid rgba(239,68,68,0.35); }
 
-    .amarelo .mascot { background: rgba(245,158,11,0.2); border: 1px solid rgba(245,158,11,0.4); }
-    .amarelo .team-name, .amarelo .team-score { color: var(--amarelo); }
+    /* cores por equipe — light */
+    [data-theme="light"] .azul     .mascot { background: #eff6ff; border: 1px solid rgba(37,99,235,0.2); }
+    [data-theme="light"] .amarelo  .mascot { background: #fffbeb; border: 1px solid rgba(217,119,6,0.2); }
+    [data-theme="light"] .verde    .mascot { background: #f0fdf4; border: 1px solid rgba(22,163,74,0.2); }
+    [data-theme="light"] .vermelho .mascot { background: #fef2f2; border: 1px solid rgba(220,38,38,0.2); }
 
-    .verde   .mascot { background: rgba(34,197,94,0.2);  border: 1px solid rgba(34,197,94,0.4); }
-    .verde   .team-name, .verde   .team-score { color: var(--verde); }
-
-    .vermelho .mascot { background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); }
+    .azul     .team-name, .azul     .team-score { color: var(--azul); }
+    .amarelo  .team-name, .amarelo  .team-score { color: var(--amarelo); }
+    .verde    .team-name, .verde    .team-score { color: var(--verde); }
     .vermelho .team-name, .vermelho .team-score { color: var(--vermelho); }
 
-    /* lider highlight */
-    .team-row.leader {
-      border-color: rgba(255,215,0,0.3);
-      background: linear-gradient(135deg, #1a1a1a 0%, #1f1c10 100%);
-    }
-
-    /* RODAPÉ INSTAGRAM */
+    /* ── FOOTER ── */
     footer {
       width: 100%;
-      max-width: 520px;
+      max-width: 500px;
       padding: 32px 16px 0;
+      text-align: center;
     }
 
     .footer-title {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 12px;
-      padding-left: 4px;
+      margin-bottom: 14px;
+      transition: color 0.3s;
     }
 
     .instagram-grid {
@@ -227,106 +313,201 @@
 
     .ig-btn {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 5px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 14px;
+      border-radius: 14px;
+      padding: 14px 10px;
       text-decoration: none;
       color: var(--text);
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: border-color 0.2s, background 0.2s;
+      font-size: 0.78rem;
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      transition: transform 0.15s, border-color 0.2s, background 0.3s;
     }
 
-    .ig-btn:hover { background: #222; }
+    .ig-btn:hover  { transform: translateY(-2px); }
+    .ig-btn:active { transform: scale(0.97); }
 
-    .ig-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
+    .ig-btn i { font-size: 1.5rem; transition: transform 0.2s; }
+    .ig-btn:hover i { transform: scale(1.12); }
+
+    .ig-btn.azul     { border-top: 3px solid var(--azul); }
+    .ig-btn.amarelo  { border-top: 3px solid var(--amarelo); }
+    .ig-btn.verde    { border-top: 3px solid var(--verde); }
+    .ig-btn.vermelho { border-top: 3px solid var(--vermelho); }
+
+    .ig-btn.azul     i { color: var(--azul); }
+    .ig-btn.amarelo  i { color: var(--amarelo); }
+    .ig-btn.verde    i { color: var(--verde); }
+    .ig-btn.vermelho i { color: var(--vermelho); }
+
+    .ig-handle {
+      color: var(--muted);
+      font-weight: 400;
+      font-size: 0.7rem;
+      transition: color 0.3s;
     }
 
-    .ig-btn.azul:hover     { border-color: var(--azul); }
-    .ig-btn.amarelo:hover  { border-color: var(--amarelo); }
-    .ig-btn.verde:hover    { border-color: var(--verde); }
-    .ig-btn.vermelho:hover { border-color: var(--vermelho); }
-
-    .ig-btn.azul     .ig-dot { background: var(--azul); }
-    .ig-btn.amarelo  .ig-dot { background: var(--amarelo); }
-    .ig-btn.verde    .ig-dot { background: var(--verde); }
-    .ig-btn.vermelho .ig-dot { background: var(--vermelho); }
-
-    /* update info */
     .update-info {
       text-align: center;
       font-size: 0.68rem;
-      color: #555;
+      color: var(--muted);
       margin-top: 28px;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
+      transition: color 0.3s;
     }
 
-    /* animação de reordenação */
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(10px); }
+    /* ── ANIMAÇÕES DE ENTRADA ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .team-row { animation: slideIn 0.4s ease both; }
+    .team-row { animation: fadeUp 0.4s ease both; }
     .team-row:nth-child(1) { animation-delay: 0.05s; }
-    .team-row:nth-child(2) { animation-delay: 0.10s; }
-    .team-row:nth-child(3) { animation-delay: 0.15s; }
-    .team-row:nth-child(4) { animation-delay: 0.20s; }
+    .team-row:nth-child(2) { animation-delay: 0.12s; }
+    .team-row:nth-child(3) { animation-delay: 0.19s; }
+    .team-row:nth-child(4) { animation-delay: 0.26s; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(16px);
+      background: var(--toast-bg);
+      color: var(--toast-text);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 99px;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      white-space: nowrap;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
   </style>
 </head>
 <body>
 
   <header>
     <div class="event-label">Olijopa 2026</div>
-    <div class="event-sub">Campeonato Multi-Esportivo</div>
-    <div class="live-badge"><span class="live-dot"></span> Ao vivo</div>
+    <div class="header-actions">
+      <button class="hbtn" id="theme-btn" onclick="toggleTheme()" aria-label="Alternar tema">
+        <i class="fa-solid fa-moon" id="theme-icon"></i> Tema
+      </button>
+      <div class="hbtn live">
+        <span class="live-dot"></span> Ao vivo
+      </div>
+      <button class="hbtn" onclick="compartilhar()" aria-label="Compartilhar">
+        <i class="fa-solid fa-share-nodes"></i> Compartilhar
+      </button>
+    </div>
   </header>
 
   <div class="scoreboard">
     <div class="section-title">Classificação Geral</div>
-    <div id="ranking"></div>
+    <div id="ranking">
+      <div class="status-msg">
+        <i class="fa-solid fa-circle-notch fa-spin"></i>
+        Carregando placar…
+      </div>
+    </div>
   </div>
 
   <footer>
     <div class="footer-title">Acompanhe nas redes</div>
     <div class="instagram-grid">
-      <a class="ig-btn azul"     href="https://instagram.com/equipeazul"     target="_blank"><span class="ig-dot"></span> @equipeazul</a>
-      <a class="ig-btn amarelo"  href="https://instagram.com/equipeamarelo"  target="_blank"><span class="ig-dot"></span> @equipeamarelo</a>
-      <a class="ig-btn verde"    href="https://instagram.com/equipeverde"    target="_blank"><span class="ig-dot"></span> @equipeverde</a>
-      <a class="ig-btn vermelho" href="https://instagram.com/equipevermelho" target="_blank"><span class="ig-dot"></span> @equipevermelho</a>
+      <a class="ig-btn azul"     href="https://instagram.com/equipeazul"     target="_blank" rel="noopener">
+        <i class="fa-brands fa-instagram"></i>
+        <span>Equipe Azul</span>
+        <span class="ig-handle">@equipeazul</span>
+      </a>
+      <a class="ig-btn amarelo"  href="https://instagram.com/equipeamarelo"  target="_blank" rel="noopener">
+        <i class="fa-brands fa-instagram"></i>
+        <span>Equipe Amarelo</span>
+        <span class="ig-handle">@equipeamarelo</span>
+      </a>
+      <a class="ig-btn verde"    href="https://instagram.com/equipeverde"    target="_blank" rel="noopener">
+        <i class="fa-brands fa-instagram"></i>
+        <span>Equipe Verde</span>
+        <span class="ig-handle">@equipeverde</span>
+      </a>
+      <a class="ig-btn vermelho" href="https://instagram.com/equipevermelho" target="_blank" rel="noopener">
+        <i class="fa-brands fa-instagram"></i>
+        <span>Equipe Vermelho</span>
+        <span class="ig-handle">@equipevermelho</span>
+      </a>
     </div>
-    <div class="update-info" id="update-info">Atualizado agora</div>
+    <div class="update-info" id="update-info">Aguardando dados…</div>
   </footer>
 
+  <div class="toast" id="toast"></div>
+
   <script>
-    // DADOS PROVISÓRIOS — substituir pela conexão com Google Sheets
-    const teamsData = [
-      { id: 'azul',     name: 'Azul',     emoji: '🔵', points: 543 },
-      { id: 'amarelo',  name: 'Amarelo',  emoji: '🟡', points: 534 },
-      { id: 'verde',    name: 'Verde',    emoji: '🟢', points: 354 },
-      { id: 'vermelho', name: 'Vermelho', emoji: '🔴', points: 200 },
-    ];
+    // ── CONFIGURAÇÃO ─────────────────────────────────────────────
+    // Passo 1: substitua pelo ID real da planilha
+    // Passo 2: confirme o nome exato da aba publicada
+    // Passo 3: publique a aba em Arquivo → Publicar na web → CSV
+    const SHEET_ID   = 'SEU_ID_AQUI';
+    const SHEET_TAB  = 'Consolidado';
+    const REFRESH_MS = 60000; // atualiza a cada 60 segundos
 
-    const posClass = ['gold', 'silver', 'bronze', 'other'];
-    const posLabel = ['1º', '2º', '3º', '4º'];
+    const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_TAB)}`;
 
+    // Metadados fixos das equipes
+    // Quando tiver os mascotes reais, substitua o emoji pela tag <img>
+    const TEAM_META = {
+      'azul':     { cls: 'azul',     emoji: '🔵', ig: 'equipeazul' },
+      'amarelo':  { cls: 'amarelo',  emoji: '🟡', ig: 'equipeamarelo' },
+      'verde':    { cls: 'verde',    emoji: '🟢', ig: 'equipeverde' },
+      'vermelho': { cls: 'vermelho', emoji: '🔴', ig: 'equipevermelho' },
+    };
+
+    const POS_CLASS = ['gold', 'silver', 'bronze', 'other'];
+    const POS_LABEL = ['1º', '2º', '3º', '4º'];
+
+    // ── TEMA ─────────────────────────────────────────────────────
+    const root      = document.documentElement;
+    const themeIcon = document.getElementById('theme-icon');
+
+    function applyTheme(theme) {
+      root.setAttribute('data-theme', theme);
+      themeIcon.className = theme === 'dark'
+        ? 'fa-solid fa-moon'
+        : 'fa-solid fa-sun';
+    }
+
+    function toggleTheme() {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      localStorage.setItem('olijopa-theme', next);
+    }
+
+    // Aplica tema salvo (ou dark por padrão)
+    const savedTheme = localStorage.getItem('olijopa-theme') || 'dark';
+    applyTheme(savedTheme);
+
+    // ── RENDER ───────────────────────────────────────────────────
     function render(teams) {
-      const sorted = [...teams].sort((a, b) => b.points - a.points);
+      const sorted    = [...teams].sort((a, b) => b.points - a.points);
       const container = document.getElementById('ranking');
       container.innerHTML = '';
 
       sorted.forEach((team, i) => {
-        const row = document.createElement('div');
-        row.className = `team-row ${team.id}${i === 0 ? ' leader' : ''}`;
+        const meta = TEAM_META[team.id] || { cls: '', emoji: '⚪' };
+        const row  = document.createElement('div');
+        row.className = `team-row ${meta.cls}${i === 0 ? ' leader' : ''}`;
         row.innerHTML = `
-          <div class="pos ${posClass[i]}">${posLabel[i]}</div>
-          <div class="mascot">${team.emoji}</div>
+          <div class="pos ${POS_CLASS[i]}">${POS_LABEL[i]}</div>
+          <div class="mascot">${meta.emoji}</div>
           <div class="team-info">
             <div class="team-name">Equipe ${team.name}</div>
             <div class="team-tag">Pontuação total</div>
@@ -341,10 +522,70 @@
         `Atualizado às ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
     }
 
-    render(teamsData);
+    function showError(msg) {
+      document.getElementById('ranking').innerHTML =
+        `<div class="status-msg"><i class="fa-solid fa-triangle-exclamation"></i>${msg}</div>`;
+    }
 
-    // Quando conectar ao Google Sheets, substituir a função abaixo
-    // e chamar render(dadosDaPlanilha) com os dados reais
+    // ── FETCH ────────────────────────────────────────────────────
+    // A aba Consolidado deve ter duas colunas: nome da equipe | pontuação
+    // Exemplo de linha no CSV:  azul,543
+    async function fetchScores() {
+      if (SHEET_ID === 'SEU_ID_AQUI') {
+        showError('Configure o ID da planilha no arquivo index.html');
+        return;
+      }
+      try {
+        const res = await fetch(CSV_URL);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const text = await res.text();
+
+        const teams = text.trim().split('\n')
+          .map(line => {
+            const parts = line.replace(/"/g, '').split(',');
+            return {
+              id:     parts[0].trim().toLowerCase(),
+              name:   parts[0].trim(),
+              points: parseInt(parts[1]) || 0,
+            };
+          })
+          .filter(t => t.id && t.name);
+
+        if (!teams.length) throw new Error('Sem dados');
+        render(teams);
+      } catch (err) {
+        showError('Não foi possível carregar os dados.<br>Verifique a conexão com a planilha.');
+        console.error(err);
+      }
+    }
+
+    // ── COMPARTILHAR ─────────────────────────────────────────────
+    function compartilhar() {
+      const url  = window.location.href;
+      const data = {
+        title: 'Olijopa 2026',
+        text:  'Acompanhe o placar ao vivo!',
+        url,
+      };
+      if (navigator.share) {
+        navigator.share(data).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(url)
+          .then(() => showToast('Link copiado!'))
+          .catch(() => showToast('Copie: ' + url));
+      }
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    // ── INIT ─────────────────────────────────────────────────────
+    fetchScores();
+    setInterval(fetchScores, REFRESH_MS);
   </script>
 
 </body>
