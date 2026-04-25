@@ -396,13 +396,13 @@
 
     .ig-btn {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
-      gap: 5px;
+      gap: 12px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 14px 10px;
+      padding: 14px 16px;
       text-decoration: none;
       color: var(--text);
       font-size: 0.78rem;
@@ -414,18 +414,25 @@
     .ig-btn:hover  { transform: translateY(-2px); }
     .ig-btn:active { transform: scale(0.97); }
 
-    .ig-btn i { font-size: 1.5rem; transition: transform 0.2s; }
+    .ig-btn i { font-size: 1.6rem; flex-shrink: 0; transition: transform 0.2s; }
     .ig-btn:hover i { transform: scale(1.12); }
 
-    .ig-btn.azul     { border-top: 3px solid var(--azul); }
-    .ig-btn.amarelo  { border-top: 3px solid var(--amarelo); }
-    .ig-btn.verde    { border-top: 3px solid var(--verde); }
-    .ig-btn.vermelho { border-top: 3px solid var(--vermelho); }
+    .ig-btn.azul     { border-left: 4px solid var(--azul); }
+    .ig-btn.amarelo  { border-left: 4px solid var(--amarelo); }
+    .ig-btn.verde    { border-left: 4px solid var(--verde); }
+    .ig-btn.vermelho { border-left: 4px solid var(--vermelho); }
 
     .ig-btn.azul     i { color: var(--azul); }
     .ig-btn.amarelo  i { color: var(--amarelo); }
     .ig-btn.verde    i { color: var(--verde); }
     .ig-btn.vermelho i { color: var(--vermelho); }
+
+    .ig-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
 
     .ig-handle {
       color: var(--muted);
@@ -517,23 +524,31 @@
     <div class="instagram-grid">
       <a class="ig-btn azul"     href="https://instagram.com/equipeazul"     target="_blank" rel="noopener">
         <i class="fa-brands fa-instagram"></i>
-        <span>Equipe Azul</span>
-        <span class="ig-handle">@equipeazul</span>
+        <div class="ig-info">
+          <span>Equipe Azul</span>
+          <span class="ig-handle">@equipeazul</span>
+        </div>
       </a>
       <a class="ig-btn amarelo"  href="https://instagram.com/equipeamarelo"  target="_blank" rel="noopener">
         <i class="fa-brands fa-instagram"></i>
-        <span>Equipe Amarelo</span>
-        <span class="ig-handle">@equipeamarelo</span>
+        <div class="ig-info">
+          <span>Equipe Amarelo</span>
+          <span class="ig-handle">@equipeamarelo</span>
+        </div>
       </a>
       <a class="ig-btn verde"    href="https://instagram.com/equipeverde"    target="_blank" rel="noopener">
         <i class="fa-brands fa-instagram"></i>
-        <span>Equipe Verde</span>
-        <span class="ig-handle">@equipeverde</span>
+        <div class="ig-info">
+          <span>Equipe Verde</span>
+          <span class="ig-handle">@equipeverde</span>
+        </div>
       </a>
       <a class="ig-btn vermelho" href="https://www.instagram.com/olijopa.vermelho?igsh=OTNueTdtOXYwdDVw" target="_blank" rel="noopener">
         <i class="fa-brands fa-instagram"></i>
-        <span>Equipe Vermelho</span>
-        <span class="ig-handle">@equipevermelho</span>
+        <div class="ig-info">
+          <span>Equipe Vermelho</span>
+          <span class="ig-handle">@equipevermelho</span>
+        </div>
       </a>
     </div>
     <div class="update-info" id="update-info">Aguardando dados…</div>
