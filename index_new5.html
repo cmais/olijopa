@@ -21,6 +21,7 @@
     }
 
     [data-theme="dark"] {
+      --branco:     #f0f0f0;
       --bg:         #0e0e0e;
       --surface:    #1a1a1a;
       --border:     #2a2a2a;
@@ -42,6 +43,7 @@
     }
 
     [data-theme="light"] {
+      --branco:     #374151;
       --bg:         #f4f2ee;
       --surface:    #ffffff;
       --border:     #e2ddd6;
@@ -422,10 +424,8 @@
     .ig-btn.verde    { border-left: 4px solid var(--verde); }
     .ig-btn.vermelho { border-left: 4px solid var(--vermelho); }
 
-    .ig-btn.azul     i { color: var(--azul); }
-    .ig-btn.amarelo  i { color: var(--amarelo); }
-    .ig-btn.verde    i { color: var(--verde); }
-    .ig-btn.vermelho i { color: var(--vermelho); }
+    .ig-btn.branco   { border-left: 4px solid var(--branco); }
+    .ig-btn.branco   i { color: var(--branco); }
 
     .ig-info {
       display: flex;
@@ -551,6 +551,13 @@
         </div>
       </a>
     </div>
+    <a class="ig-btn branco" href="https://www.instagram.com/jopa.gram/" target="_blank" rel="noopener" style="margin-top: 10px; justify-content: center;">
+      <i class="fa-brands fa-instagram"></i>
+      <div class="ig-info">
+        <span>Jopa Oficial</span>
+        <span class="ig-handle">@jopa.gram</span>
+      </div>
+    </a>
     <div class="update-info" id="update-info">Aguardando dados…</div>
   </footer>
 
