@@ -21,6 +21,7 @@
     }
 
     [data-theme="dark"] {
+      --branco:     #f0f0f0;
       --bg:         #0e0e0e;
       --surface:    #1a1a1a;
       --border:     #2a2a2a;
@@ -42,6 +43,7 @@
     }
 
     [data-theme="light"] {
+      --branco:     #374151;
       --bg:         #f4f2ee;
       --surface:    #ffffff;
       --border:     #e2ddd6;
@@ -92,6 +94,28 @@
       inset: 0;
       background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.04) 0%, transparent 70%);
       pointer-events: none;
+    }
+
+    /* ── LOGO + TÍTULO ── */
+    .header-title {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .school-logo {
+      width:  clamp(2.4rem, 10vw, 4.8rem);
+      height: clamp(2.4rem, 10vw, 4.8rem);
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 2px solid rgba(255,255,255,0.15);
+      transition: border-color 0.3s;
+    }
+
+    [data-theme="light"] .school-logo {
+      border-color: rgba(0,0,0,0.12);
     }
 
     .event-label {
@@ -242,15 +266,15 @@
     }
 
     .team-row.moved-up {
-      animation: slideUp 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+      animation: slideUp 1.2s cubic-bezier(0.34,1.56,0.64,1) both;
     }
 
     .team-row.moved-down {
-      animation: slideDown 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+      animation: slideDown 1.2s cubic-bezier(0.34,1.56,0.64,1) both;
     }
 
     .team-row.new-leader {
-      animation: slideUp 0.5s cubic-bezier(0.34,1.56,0.64,1) both,
+      animation: slideUp 1.2s cubic-bezier(0.34,1.56,0.64,1) both,
                  leaderGlow 1.8s ease 0.4s both;
     }
 
@@ -309,7 +333,7 @@
 
     [data-theme="dark"] .azul     .mascot { background: rgba(59,130,246,0.18); border: 1px solid rgba(59,130,246,0.35); }
     [data-theme="dark"] .amarelo  .mascot { background: rgba(245,158,11,0.18); border: 1px solid rgba(245,158,11,0.35); }
-    [data-theme="dark"] .verde    .mascot { background: rgba(34,197,94,0.18);  border: 1px solid rgba(34,197,94,0.35); }
+    [data-theme="dark"] .verde    .mascote { background: rgba(34,197,94,0.18);  border: 1px solid rgba(34,197,94,0.35); }
     [data-theme="dark"] .vermelho .mascot { background: rgba(239,68,68,0.18);  border: 1px solid rgba(239,68,68,0.35); }
 
     [data-theme="light"] .azul     .mascot { background: #eff6ff; border: 1px solid rgba(37,99,235,0.2); }
@@ -346,7 +370,7 @@
       line-height: 1;
       text-align: right;
       letter-spacing: 0.02em;
-      padding-right: 20px; /* espaço para a seta */
+      padding-right: 20px;
     }
 
     /* ── FOOTER ── */
@@ -374,13 +398,13 @@
 
     .ig-btn {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
-      gap: 5px;
+      gap: 12px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 14px 10px;
+      padding: 14px 16px;
       text-decoration: none;
       color: var(--text);
       font-size: 0.78rem;
@@ -392,18 +416,27 @@
     .ig-btn:hover  { transform: translateY(-2px); }
     .ig-btn:active { transform: scale(0.97); }
 
-    .ig-btn i { font-size: 1.5rem; transition: transform 0.2s; }
+    .ig-btn i { font-size: 1.6rem; flex-shrink: 0; transition: transform 0.2s; }
     .ig-btn:hover i { transform: scale(1.12); }
 
-    .ig-btn.azul     { border-top: 3px solid var(--azul); }
-    .ig-btn.amarelo  { border-top: 3px solid var(--amarelo); }
-    .ig-btn.verde    { border-top: 3px solid var(--verde); }
-    .ig-btn.vermelho { border-top: 3px solid var(--vermelho); }
+    .ig-btn.azul     { border-left: 4px solid var(--azul); }
+    .ig-btn.amarelo  { border-left: 4px solid var(--amarelo); }
+    .ig-btn.verde    { border-left: 4px solid var(--verde); }
+    .ig-btn.vermelho { border-left: 4px solid var(--vermelho); }
 
+    .ig-btn.branco   { border-left: 4px solid var(--branco); }
     .ig-btn.azul     i { color: var(--azul); }
     .ig-btn.amarelo  i { color: var(--amarelo); }
     .ig-btn.verde    i { color: var(--verde); }
     .ig-btn.vermelho i { color: var(--vermelho); }
+    .ig-btn.branco   i { color: var(--branco); }
+
+    .ig-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
 
     .ig-handle {
       color: var(--muted);
@@ -459,7 +492,15 @@
 <body>
 
   <header>
-    <div class="event-label">Olijopa 2026</div>
+    <div class="header-title">
+      <img
+        src="logo.png"
+        alt="Logo da escola"
+        class="school-logo"
+        onerror="this.style.display='none'"
+      />
+      <div class="event-label">Olijopa 2026</div>
+    </div>
     <div class="header-actions">
       <button class="hbtn" onclick="toggleTheme()" aria-label="Alternar tema">
         <i class="fa-solid fa-moon" id="theme-icon"></i> Tema
@@ -487,25 +528,40 @@
     <div class="instagram-grid">
       <a class="ig-btn azul"     href="https://instagram.com/equipeazul"     target="_blank" rel="noopener">
         <i class="fa-brands fa-instagram"></i>
-        <span>Equipe Azul</span>
-        <span class="ig-handle">@equipeazul</span>
+        <div class="ig-info">
+          <span>Equipe Azul</span>
+          <span class="ig-handle">@equipeazul</span>
+        </div>
       </a>
       <a class="ig-btn amarelo"  href="https://instagram.com/equipeamarelo"  target="_blank" rel="noopener">
         <i class="fa-brands fa-instagram"></i>
-        <span>Equipe Amarelo</span>
-        <span class="ig-handle">@equipeamarelo</span>
+        <div class="ig-info">
+          <span>Equipe Amarelo</span>
+          <span class="ig-handle">@equipeamarelo</span>
+        </div>
       </a>
       <a class="ig-btn verde"    href="https://instagram.com/equipeverde"    target="_blank" rel="noopener">
         <i class="fa-brands fa-instagram"></i>
-        <span>Equipe Verde</span>
-        <span class="ig-handle">@equipeverde</span>
+        <div class="ig-info">
+          <span>Equipe Verde</span>
+          <span class="ig-handle">@equipeverde</span>
+        </div>
       </a>
       <a class="ig-btn vermelho" href="https://www.instagram.com/olijopa.vermelho?igsh=OTNueTdtOXYwdDVw" target="_blank" rel="noopener">
         <i class="fa-brands fa-instagram"></i>
-        <span>Equipe Vermelho</span>
-        <span class="ig-handle">@equipevermelho</span>
+        <div class="ig-info">
+          <span>Equipe Vermelho</span>
+          <span class="ig-handle">@equipevermelho</span>
+        </div>
       </a>
     </div>
+    <a class="ig-btn branco" href="https://www.instagram.com/jopa.gram/" target="_blank" rel="noopener" style="margin-top: 10px; justify-content: center;">
+      <i class="fa-brands fa-instagram"></i>
+      <div class="ig-info">
+        <span>Jopa Oficial</span>
+        <span class="ig-handle">@jopa.gram</span>
+      </div>
+    </a>
     <div class="update-info" id="update-info">Aguardando dados…</div>
   </footer>
 
@@ -516,8 +572,6 @@
     const CSV_URL    = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT-2IrkVxkVqR3NxspC9Aho4Lhk5uUNpbUQuGhKYxum_SPRCmS8MIWokWdess8-Ak8bWObh9BkTf7tJ/pub?gid=0&single=true&output=csv';
     const REFRESH_MS = 30000;
 
-    // Quando os mascotes estiverem prontos, substitua o campo mascot
-    // de null para o nome do arquivo, ex: 'm_azul.png'
     const TEAM_META = {
       'azul':     { cls: 'azul',     mascot: 'm_azul.png',     ig: 'equipeazul' },
       'amarelo':  { cls: 'amarelo',  mascot: 'm_amarelo.png',  ig: 'equipeamarelo' },
@@ -525,7 +579,6 @@
       'vermelho': { cls: 'vermelho', mascot: 'm_vermelho.png', ig: 'equipevermelho' },
     };
 
-    // Fallback emoji enquanto o arquivo de imagem não existe
     const EMOJI_FALLBACK = {
       'azul': '🔵', 'amarelo': '🟡', 'verde': '🟢', 'vermelho': '🔴'
     };
@@ -533,8 +586,7 @@
     const POS_CLASS = ['gold', 'silver', 'bronze', 'other'];
     const POS_LABEL = ['1º', '2º', '3º', '4º'];
 
-    // Guarda a classificação anterior para detectar viradas
-    let prevRanking = []; // array de ids na ordem anterior
+    let prevRanking = [];
     let isFirstLoad = true;
 
     // ── TEMA ─────────────────────────────────────────────────────
@@ -570,11 +622,9 @@
       const container = document.getElementById('ranking');
       const newRanking = sorted.map(t => t.id);
 
-      // Detecta mudanças de posição
-      const changes = {}; // id -> 'up' | 'down' | 'same' | 'new-leader'
+      const changes = {};
       if (!isFirstLoad && prevRanking.length) {
         const prevLeader = prevRanking[0];
-        const newLeader  = newRanking[0];
 
         newRanking.forEach((id, newPos) => {
           const oldPos = prevRanking.indexOf(id);
@@ -607,7 +657,6 @@
 
         row.className = rowClass;
 
-        // seta de movimento
         let arrowHTML = '';
         if (change === 'up' || change === 'new-leader') {
           arrowHTML = `<span class="move-arrow up">▲</span>`;
@@ -644,7 +693,7 @@
     // ── FETCH ────────────────────────────────────────────────────
     async function fetchScores() {
       try {
-        const res = await fetch(CSV_URL + '&t=' + Date.now()); // evita cache
+        const res = await fetch(CSV_URL + '&t=' + Date.now());
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const text = await res.text();
 
