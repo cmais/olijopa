@@ -1,2 +1,2 @@
 # olijopa
-olijopa 2026 -
+Aguarde o resultado final
